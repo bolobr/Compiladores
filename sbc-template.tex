@@ -1,0 +1,42 @@
+%	Documentao do Trabalho Prtico 0 de AEDSIII
+%	@Arlei Lopes da Silva
+%
+%	* Voc pode identificar erros de grafia atravs do seguinte comando linux:
+%		aspell --encoding="iso8859-1" -c -t=tex --lang="pt_BR" tp0.tex
+%
+%	Tenha cuidado com problemas de codificao, voc pode perder muito tempo com isso (ter que reescrever o texto por que os caracteres % acendutados no aparecem corretamento no pdf, por exemplo). Se voc usa Vi/Vim, ele identifica a codificao sozinho, em editores do tipo % Kate/Kwrite voc pode definir a codificao em Ferramentas/Codificao, escolha a opo Oeste Europeu (iso8859-1).
+%	Para compilar o texto utilize o comando make (foi criado um Makefile)
+%	Para maiores informaes consulte referncias sobre Latex
+
+\documentclass[12pt]{article}
+\usepackage{sbc-template}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{subfigure}
+\usepackage{times,amsmath,epsfig}
+\usepackage{graphicx,url}
+ \makeatletter
+ \newif\if@restonecol
+ \makeatother
+ \let\algorithm\relax
+ \let\endalgorithm\relax
+\usepackage[lined,algonl,ruled]{algorithm2e}
+\usepackage{multirow}
+\usepackage[brazil]{babel}
+\usepackage[utf8x]{inputenc}
+
+\sloppy
+
+\title{Tabela de Símbolos \\ Compiladores}
+
+\author{Arthur Camara\\Guilherme Chaves Santos Cordeiro}
+
+\address{Departamento de Ciência da Computação -- Universidade Federal de Minas Gerais (UFMG)
+    \email{[camara.arthur, guicordeiro]@dcc.ufmg.br}
+}
+
+\begin{document}
+
+\maketitle
+
+\end{document}

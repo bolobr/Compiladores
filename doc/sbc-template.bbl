@@ -1,0 +1,48 @@
+\begin{thebibliography}{}
+
+\bibitem[Aztiria et~al. 2011]{Aztiria:2011}
+Aztiria, A., Augusto, J.~C., Basagoiti, R., Izaguirre, A., and Cook, D.~J.
+  (2011).
+\newblock Discovering frequent user-environment interactions in intelligent
+  environments.
+\newblock {\em Pers Ubiquit Comput}, pages 91--103.
+
+\bibitem[Faria and Nogueira 2010a]{Faria:2010}
+Faria, F. and Nogueira, J.~M. (2010a).
+\newblock Context-based application-aware pricing for composite mobile services
+  in wireless networks.
+\newblock {\em WD2010}.
+
+\bibitem[Faria and Nogueira 2010b]{Faria2:2010}
+Faria, F. and Nogueira, J.~M. (2010b).
+\newblock Exploring context based charging for composite services.
+\newblock {\em ICIN2010}.
+
+\bibitem[Google 2014]{google}
+Google (2014).
+\newblock Android reference manual.
+\newblock http://developer.android.com/reference/packages.html.
+
+\bibitem[Lopez et~al. 2012]{Lopez:2012}
+Lopez, T.~S., Ranasinghe, D.~C., Harrison, M., and McFarlane, D. (2012).
+\newblock Adding sense to the internet of things: An architecture framework for
+  smart object systems.
+\newblock {\em Pers Ubiquit Comput}, pages 291--308.
+
+\bibitem[Younas and Mostéfaoui 2011]{Younas:2011}
+Younas, M. and Mostéfaoui, S.~K. (2011).
+\newblock A new model for context-aware transactions in mobile services.
+\newblock {\em Pers Ubiquit Comput}, pages 821--831.
+
+\bibitem[Yu et~al. 2010]{Yu:10}
+Yu, Z., Zhang, D., Indulska, J., and Becker, C. (2010).
+\newblock Theme issue on context-aware middleware and applications.
+\newblock {\em Pers Ubiquit Comput}, pages 219--220.
+
+\bibitem[Zhou et~al. 2010]{Zhou:10}
+Zhou, J., Gilman, E., Palola, J., Riekki, J., Ylianttila, M., and Sun, J.
+  (2010).
+\newblock Context aware pervasive service composition and its implementation.
+\newblock {\em Pers Ubiquit Comput}, pages 291--303.
+
+\end{thebibliography}
