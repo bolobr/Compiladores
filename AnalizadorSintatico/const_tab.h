@@ -25,3 +25,7 @@
 #define DIV_OP 124
 #define AND_OP 125
 #define NEGATIVE 126
+#define TYPE_PROCEDURE 127
+#define TYPE_BOOLEAN 128
+#define TYPE_ARRAY 129
+#define PROCEDURE 130

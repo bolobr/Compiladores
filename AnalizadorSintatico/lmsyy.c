@@ -5,21 +5,46 @@
     using namespace std;
     hashTable *symbol_table = new hashTable();
 %}
-TYPE_INTEGER [0-9]+
-TYPE_REAL [0-9]+.[0-9]*
+TYPE_INTEGER integer
+TYPE_REAL real
+TYPE_BOOLEAN boolean
+PROCEDURE procedure
+TYPE_ARRAY array
 TYPE_IDENTIFIER [a-z]([a-zA-Z0-9]*)
 ASSIGNMENT :=
-
+ANY_TYPE integer
 NEWLINE \n
-%%
 
+%s EXPRESSION
+%%
+expression BEGIN(EXPRESSION);
+<EXPRESSION>; {
+    printf("When it passess here?");
+    return LOOP;
+}
 
 {TYPE_INTEGER} {
-    symbol_table->install(yytext, "INTEGER" );
+    symbol_table->install(yytext, "INTEGER");
+    BEGIN(EXPRESSION);
+    printf("it should show this");
     return TYPE_INTEGER; }
-{TYPE_REAL} {
+real{TYPE_IDENTIFIER} {
     symbol_table->install(yytext, "REAL");
     return TYPE_REAL; }
+procedure{TYPE_IDENTIFIER} {
+    symbol_table->install(yytext, "PROCEDURE");
+    return TYPE_PROCEDURE;
+}
+
+boolean{TYPE_IDENTIFIER} {
+    symbol_table->install(yytext, "BOOLEAN");
+    return TYPE_BOOLEAN;
+}
+
+array{TYPE_INTEGER}{ANY_TYPE}{TYPE_IDENTIFIER} {
+    symbol_table->install(yytext, "Array");
+    return TYPE_ARRAY;
+}
 
 "+"  { return PLUS_OP; }
 "-" { return MINUS_OP; }
@@ -38,17 +63,17 @@ not { return NEGATIVE; }
 program { return CODE_BEGIN; }
 {ASSIGNMENT} { return ASSIGNMENT; }
 [Dd][Ee][Cc][Ll][Aa][Rr][Ee] { return  DECLARE; }
-[Dd][Oo] { return DO; }
-[Ll][Oo][Oo][Pp] { return LOOP; }
-[Ii][Ff] { return IF; }
+[Dd][Oo] { symbol_table->enterBlock(); return DO; }
+[Ll][Oo][Oo][Pp] { symbol_table->enterBlock(); return LOOP; }
+[Ii][Ff] { symbol_table->enterBlock(); return IF; }
 [Ee][Ll][Ss][Ee] { return ELSE; }
-[Ww][Hh][Ii][Ll][Ee] { return WHILE; }
+[Ww][Hh][Ii][Ll][Ee] { symbol_table->enterBlock(); return WHILE; }
 [Gg][Oo][Tt][Oo] { return GOTO; }
 [Rr][Ee][Tt][Uu][Rr][Nn] { return RETURN; }
-[Ee][Nn][Dd] { return END; }
-{TYPE_IDENTIFIER} {
-    symbol_table->install(yytext, "IDENTIFIER");
-    return TYPE_IDENTIFIER; }
+[Ee][Nn][Dd] { symbol_table->exitBlock(); return END; }
+[Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee] { symbol_table->enterBlock(); return PROCEDURE; }
+
+
 
 %%
 
