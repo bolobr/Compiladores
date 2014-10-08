@@ -2,7 +2,7 @@
 #include<stdio.h>
 
 %}
-%token  declare do end array of integer boolean char real procedure if then identifier digit letter caractere write read while until true false return program or not goto and else assignment expression integer-constant
+%token  declare do end array of integer boolean char real procedure if then identifier digit letter caractere write read while until true false return program or not goto and else assignment char-constant TRUE FALSE EQUALS LT GT LTE GTE DIFF MULT PLUS MINUS  AND DIVISION OR unsigned-integer unsigned-real
 %start program-linha
 %%
 
@@ -102,13 +102,10 @@ unlabelled-stmt : assign-stmt;
                 | goto-stmt
                 | proc-stmt
                 | return-stmt
-                | block-stmt-linha
+                /* | block-stmt */
                 | write-stmt
                 ;
 
-block-stmt-linha :
-                 | block-stmt
-                 ;
 
 assign-stmt : variable assignment expression;
 
@@ -153,82 +150,66 @@ expr-list : expression resto-expressionlist;
 resto-expressionlist :
                      | ','expression resto-expressionlist
                      ;
-/*  */
-/* expression : simple-expr simple_expr_linha; */
-/*  */
-/* simple_expr_linha : */
-/*                   | simple-expr relop simple-expr */
-/*                   ; */
-/* simple-expr : term simple_expr_list; */
-/*  */
-/* simple_expr_list : addop term simple_expr_list; */
-/*  */
-/* term : factor-a term_linha; */
-/*  */
-/* term_linha : */
-/*            | mulop factor-a term_linha */
-/*            ; */
-/*  */
-/* factor-a : factor */
-/*          | not factor */
-/*          | "-" factor */
-/*          ; */
-/*  */
-/* factor : variable */
-/*        | constant */
-/*        | '(' expression ')' */
-/*        ; */
-/*  */
-/* relop : '=' */
-/*       | '<' */
-/*       | '>' */
-/*       | ">=" */
-/*       | "<=" */
-/*       | "!=" */
-/*       ; */
-/*  */
-/* addop : '+' */
-/*       | '-' */
-/*       | or */
-/*       ; */
-/*  */
-/* mulop : '*' */
-/*       | '/' */
-/*       | and */
-/*       ; */
-/*  */
-/* constant : integer-constant */
-/*          | real-constant */
-/*          | char-constant */
-/*          | boolean-constant */
-/*          ; */
-/*  */
-/* boolean-constant : false */
-/*                  | true */
-/*                  ; */
-/*  */
-/* integer-constant : unsigned-integer; */
-/*  */
-/* unsigned-integer : digit resto-digit; */
-/*  */
-/* resto-digit : */
-/*             | digit resto-digit; */
-/*  */
-/* real-constant : unsigned-real; */
-/*  */
-/* unsigned-real : unsigned-integer dot_integer scale_factor; */
-/*  */
-/* dot_integer : */
-/*             | '.' unsigned-integer */
-/*             ; */
-/*  */
-/* scale_factor : "E" sign unsigned-integer; */
-/*  */
-/* sign : */
-/*      | '+' */
-/*      | '-' */
-/*      ; */
-/*  */
+
+expression : simple-expr simple_expr_linha;
+
+simple_expr_linha :
+                  | relop simple-expr
+                  ;
+
+simple-expr : term simple_expr_list;
+
+simple_expr_list :
+                 | addop term simple_expr_list;
+
+term : factor-a term_linha;
+
+term_linha :
+           | mulop factor-a term_linha
+           ;
+
+factor-a : factor
+         | not factor
+         | "-" factor
+         ;
+
+factor : variable
+       | constant
+       | '(' expression ')'
+       ;
+
+relop : EQUALS
+      | LT
+      | GT
+      | GTE
+      | LTE
+      | DIFF
+      ;
+
+addop : PLUS
+      | MINUS
+      | OR
+      ;
+
+mulop : MULT
+      | DIVISION
+      | AND
+      ;
+
+constant : integer-constant
+         | real-constant
+         | char-constant
+         | boolean-constant
+         ;
+
+boolean-constant : FALSE
+                 | TRUE
+                 ;
+
+integer-constant : unsigned-integer;
+
+real-constant : unsigned-real;
+
 /* char-constant : caractere; */
 /*  */
 /*  */
