@@ -102,7 +102,7 @@ unlabelled-stmt : assign-stmt;
                 | goto-stmt
                 | proc-stmt
                 | return-stmt
-                /* | block-stmt */
+                | block-stmt
                 | write-stmt
                 ;
 
