@@ -15,36 +15,27 @@ ASSIGNMENT :=
 ANY_TYPE integer
 NEWLINE \n
 
-%s EXPRESSION
+%x LIST_EXP LIST_FOLLOW EXPRESSION
 %%
-expression BEGIN(EXPRESSION);
-<EXPRESSION>; {
-    printf("When it passess here?");
+
+<LIST_FOLLOW>", "{TYPE_IDENTIFIER} {
+    printf("%s\n", yytext);
+    return LOOP;
+
+}
+<LIST_EXP>[  ]{TYPE_IDENTIFIER} {
+    printf("%s<----\n", yytext);
+    BEGIN(LIST_FOLLOW);
     return LOOP;
 }
 
 {TYPE_INTEGER} {
-    symbol_table->install(yytext, "INTEGER");
-    BEGIN(EXPRESSION);
-    printf("it should show this");
+    printf("%s<----\n", yytext);
+    BEGIN(LIST_EXP);
+    printf("it should show this\n");
     return TYPE_INTEGER; }
-real{TYPE_IDENTIFIER} {
-    symbol_table->install(yytext, "REAL");
-    return TYPE_REAL; }
-procedure{TYPE_IDENTIFIER} {
-    symbol_table->install(yytext, "PROCEDURE");
-    return TYPE_PROCEDURE;
-}
 
-boolean{TYPE_IDENTIFIER} {
-    symbol_table->install(yytext, "BOOLEAN");
-    return TYPE_BOOLEAN;
-}
 
-array{TYPE_INTEGER}{ANY_TYPE}{TYPE_IDENTIFIER} {
-    symbol_table->install(yytext, "Array");
-    return TYPE_ARRAY;
-}
 
 "+"  { return PLUS_OP; }
 "-" { return MINUS_OP; }
@@ -57,9 +48,9 @@ array{TYPE_INTEGER}{ANY_TYPE}{TYPE_IDENTIFIER} {
 "*" { return MUL_OP;}
 "/" { return DIV_OP; }
 
-and { return AND_OP; }
-or { return OR_OP; }
-not { return NEGATIVE; }
+[ ]and[ ] { return AND_OP; }
+[ ]or[ ] { return OR_OP; }
+[ ]not[ ] { return NEGATIVE; }
 program { return CODE_BEGIN; }
 {ASSIGNMENT} { return ASSIGNMENT; }
 [Dd][Ee][Cc][Ll][Aa][Rr][Ee] { return  DECLARE; }
@@ -72,6 +63,7 @@ program { return CODE_BEGIN; }
 [Rr][Ee][Tt][Uu][Rr][Nn] { return RETURN; }
 [Ee][Nn][Dd] { symbol_table->exitBlock(); return END; }
 [Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee] { symbol_table->enterBlock(); return PROCEDURE; }
+
 
 
 

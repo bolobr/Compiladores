@@ -13,9 +13,9 @@ hashTable::hashTable(){
 void hashTable::st_error(int numero){
     char option;
     switch(numero){
-        case 1: cout<<"Symbols table full"<<endl;
-        case 2: cout<<"Item not found"<<endl;
-        case 3: cout<<"Item already inserted"<<endl;
+        //case 1: cout<<"Symbols table full"<<endl;
+        //case 2: cout<<"Item not found"<<endl;
+        //case 3: cout<<"Item already inserted"<<endl;
     }
 }
 
@@ -25,7 +25,7 @@ void hashTable::enterBlock(){
         st_error(1);
     else
         _scope[_level]=_L;
-    cout<<endl<<"Entry on level "<<_level<<endl;
+    //cout<<endl<<"Entry on level "<<_level<<endl;
 };
 
 void hashTable::exitBlock(){
@@ -40,7 +40,7 @@ void hashTable::exitBlock(){
         _tabHash[k] = _table[S].col;
 
     }
-    cout<<endl<<"Exiting level "<<endl;
+    //cout<<endl<<"Exiting level "<<endl;
     _level--;
     _L=B;
 }
@@ -58,8 +58,8 @@ int hashTable::getEntry(char x[10]){
             k = _table[k].col;
     }
     if (found == 0){
-        cout<<"Item is in level "<<_table[k].level;
-        cout<<"           index "<<k;
+    //    cout<<"Item is in level "<<_table[k].level;
+    //    cout<<"           index "<<k;
         return k;
     }
     else{

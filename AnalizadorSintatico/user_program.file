@@ -1,6 +1,6 @@
 program teste4
 declare
-integer divisor, number;
+integer divisor, number, task;
 boolean nofactor, prime
 do read(number);
 write(number);
