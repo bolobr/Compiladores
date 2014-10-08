@@ -2,7 +2,7 @@
 #include<stdio.h>
 
 %}
-%token  declare do end array of integer boolean char real procedure if then identifier digit letter caractere write read while until true false return program or not goto and else assignment char-constant TRUE FALSE EQUALS LT GT LTE GTE DIFF MULT PLUS MINUS  AND DIVISION OR unsigned-integer unsigned-real
+%token  declare do_key end array of integer boolean char_type real procedure if_key then identifier digit letter caractere write read while_key until return_key program NOT_KEY goto_key else_key assignment char-constant TRUE_VALUE FALSE_VALUE EQUALS LT GT LTE GTE DIFF MULT PLUS MINUS  AND_KEY DIVISION OR_KEY unsigned-integer unsigned-real
 %start program-linha
 %%
 
@@ -13,7 +13,7 @@ program-linha :
 proc-body : block-stmt
           ;
 
-block-stmt : declare-stmt do stmt-list end
+block-stmt : declare-stmt do_key stmt-list end
            ;
 
 declare-stmt :
@@ -45,7 +45,7 @@ type : simple-type
 simple-type : integer
      | real
      | boolean
-     | char
+     | char_type
      | label
      ;
 
@@ -102,7 +102,7 @@ unlabelled-stmt : assign-stmt;
                 | goto-stmt
                 | proc-stmt
                 | return-stmt
-                |  block-stmt
+                /* |  block-stmt */
                 | write-stmt
                 ;
 
@@ -114,18 +114,18 @@ variable : identifier
           ;
 array-element : identifier'[' expression ']';
 
-if-stmt : if condition then stmt-list if-stmt-linha end;
+if-stmt : if_key condition then stmt-list if-stmt-linha end;
 
 if-stmt-linha :
-              | else stmt-list
+              | else_key stmt-list
               ;
 
 condition : expression;
 
 loop-stmt : stmt-prefix stmt-list stmt-suffix;
 
-stmt-prefix : while condition do
-            | do
+stmt-prefix : while_key condition do_key
+            | do_key
             ;
 
 stmt-suffix : until condition
@@ -136,14 +136,14 @@ read-stmt : read '(' ident-list ')';
 
 write-stmt : write '(' expr-list ')';
 
-goto-stmt : goto label;
+goto-stmt : goto_key label;
 
 proc-stmt : identifier expr-list-linha;
 
 expr-list-linha :
                 | expr-list
                 ;
-return-stmt : return;
+return-stmt : return_key;
 
 expr-list : expression resto-expressionlist;
 
@@ -169,7 +169,7 @@ term_linha :
            ;
 
 factor-a : factor
-         | not factor
+         | NOT_KEY factor
          | "-" factor
          ;
 
@@ -188,12 +188,12 @@ relop : EQUALS
 
 addop : PLUS
       | MINUS
-      | OR
+      | OR_KEY
       ;
 
 mulop : MULT
       | DIVISION
-      | AND
+      | AND_KEY
       ;
 
 constant : integer-constant
@@ -202,8 +202,8 @@ constant : integer-constant
          | boolean-constant
          ;
 
-boolean-constant : FALSE
-                 | TRUE
+boolean-constant : FALSE_VALUE
+                 | TRUE_VALUE
                  ;
 
 integer-constant : unsigned-integer;
@@ -217,8 +217,11 @@ real-constant : unsigned-real;
 /*  */
 
 %%
+int yylex;
 
-
- int main (void) {return yyparse ( );}
+ int main (void) {
+    int yylex = 0;
+    return yyparse ( );
+ }
 
  void yyerror (char *s) {fprintf (stderr, "%s\n", s);}
