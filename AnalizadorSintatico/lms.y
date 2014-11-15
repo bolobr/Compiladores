@@ -1,6 +1,7 @@
 %{
 #include<stdio.h>
-
+int yylex(void);
+void yyerror(const char* s) { fprintf(stderr, "%s\n", s); }
 %}
 %token  declare do_key end array of integer boolean char_type real procedure if_key then identifier digit letter caractere write read while_key until return_key program NOT_KEY goto_key else_key assignment char-constant TRUE_VALUE FALSE_VALUE EQUALS LT GT LTE GTE DIFF MULT PLUS MINUS  AND_KEY DIVISION OR_KEY unsigned-integer unsigned-real
 %start program-linha
@@ -9,6 +10,7 @@
 
 program-linha :
           | program identifier proc-body ;
+
 
 proc-body : block-stmt
           ;
@@ -217,10 +219,8 @@ real-constant : unsigned-real;
 /*  */
 
 %%
-int yylex;
 
  int main (void) {
-    int yylex = 0;
     return yyparse ( );
  }
 
