@@ -5,37 +5,16 @@
     using namespace std;
     hashTable *symbol_table = new hashTable();
 %}
-TYPE_INTEGER integer
-TYPE_REAL real
-TYPE_BOOLEAN boolean
+
 PROCEDURE procedure
-TYPE_ARRAY array
 TYPE_IDENTIFIER [a-z]([a-zA-Z0-9]*)
+REAL [0-9]+.[0-9]+
+INTEGER [0-9]+
 ASSIGNMENT :=
-ANY_TYPE integer
 NEWLINE \n
 
-%x LIST_EXP LIST_FOLLOW EXPRESSION
+%x LIST_FOLLOW EXPRESSION
 %%
-
-<LIST_FOLLOW>", "{TYPE_IDENTIFIER} {
-    printf("%s\n", yytext);
-    return LOOP;
-
-}
-<LIST_EXP>[  ]{TYPE_IDENTIFIER} {
-    printf("%s<----\n", yytext);
-    BEGIN(LIST_FOLLOW);
-    return LOOP;
-}
-
-{TYPE_INTEGER} {
-    printf("%s<----\n", yytext);
-    BEGIN(LIST_EXP);
-    printf("it should show this\n");
-    return TYPE_INTEGER; }
-
-
 
 "+"  { return PLUS_OP; }
 "-" { return MINUS_OP; }
@@ -51,8 +30,9 @@ NEWLINE \n
 [ ]and[ ] { return AND_OP; }
 [ ]or[ ] { return OR_OP; }
 [ ]not[ ] { return NEGATIVE; }
-program { return CODE_BEGIN; }
 {ASSIGNMENT} { return ASSIGNMENT; }
+
+program { return CODE_BEGIN; }
 [Dd][Ee][Cc][Ll][Aa][Rr][Ee] { return  DECLARE; }
 [Dd][Oo] { symbol_table->enterBlock(); return DO; }
 [Ll][Oo][Oo][Pp] { symbol_table->enterBlock(); return LOOP; }
@@ -64,7 +44,19 @@ program { return CODE_BEGIN; }
 [Ee][Nn][Dd] { symbol_table->exitBlock(); return END; }
 [Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee] { symbol_table->enterBlock(); return PROCEDURE; }
 
+{TYPE_IDENTIFIER} {
+    return 1;
 
+}
+
+{REAL} {
+    printf("real");
+    return 1;
+}
+
+{INTEGER} {
+    return 1;
+}
 
 
 %%
@@ -84,7 +76,6 @@ main() {
 	while(n){
        n = yylex();
     }
-    symbol_table->print();
 }
 
 int yywrap(){
