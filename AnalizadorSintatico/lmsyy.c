@@ -45,17 +45,16 @@ program { return CODE_BEGIN; }
 [Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee] { symbol_table->enterBlock(); return PROCEDURE; }
 
 {TYPE_IDENTIFIER} {
-    return 1;
+    return TYPE_IDENTIFIER;
 
 }
 
 {REAL} {
-    printf("real");
-    return 1;
+    return TYPE_REAL;
 }
 
 {INTEGER} {
-    return 1;
+    return TYPE_INTEGER;
 }
 
 
