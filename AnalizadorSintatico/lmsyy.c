@@ -2,6 +2,7 @@
 #include <iostream>
 #include "HashTable.h"
 #include "const_tab.h"
+#include "lms.tab.h"
     using namespace std;
     hashTable *symbol_table = new hashTable();
 %}
@@ -13,9 +14,7 @@ INTEGER [0-9]+
 ASSIGNMENT :=
 NEWLINE \n
 
-%x LIST_FOLLOW EXPRESSION
 %%
-
 "+"  { return PLUS_OP; }
 "-" { return MINUS_OP; }
 "=" { return EQUALS; }
@@ -26,28 +25,38 @@ NEWLINE \n
 "!=" { return DIFF; }
 "*" { return MUL_OP;}
 "/" { return DIV_OP; }
+"," { return COMA_SEPARATOR; }
+";" { return END_LINE_TOKEN; }
+"(" { return PARENTESIS_OPEN;}
+")" { return PARENTESIS_CLOSE;}
+{ASSIGNMENT} { return ASSIGNMENT_KEY; }
+
 
 [ ]and[ ] { return AND_OP; }
 [ ]or[ ] { return OR_OP; }
 [ ]not[ ] { return NEGATIVE; }
 {ASSIGNMENT} { return ASSIGNMENT; }
 
+integer { return INTEGER_TOKEN; }
+real { return REAL_TOKEN; }
+boolean { return BOOLEAN_TOKEN; }
+char_type { return CHAR_TOKEN; }
+
+read { return READ_TOKEN; }
+write { return WRITE_TOKEN; }
 program { return CODE_BEGIN; }
 [Dd][Ee][Cc][Ll][Aa][Rr][Ee] { return  DECLARE; }
-[Dd][Oo] { symbol_table->enterBlock(); return DO; }
-[Ll][Oo][Oo][Pp] { symbol_table->enterBlock(); return LOOP; }
-[Ii][Ff] { symbol_table->enterBlock(); return IF; }
-[Ee][Ll][Ss][Ee] { return ELSE; }
-[Ww][Hh][Ii][Ll][Ee] { symbol_table->enterBlock(); return WHILE; }
-[Gg][Oo][Tt][Oo] { return GOTO; }
-[Rr][Ee][Tt][Uu][Rr][Nn] { return RETURN; }
-[Ee][Nn][Dd] { symbol_table->exitBlock(); return END; }
-[Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee] { symbol_table->enterBlock(); return PROCEDURE; }
+[Dd][Oo] { symbol_table->enterBlock(); return DO_KEY; }
+[Ll][Oo][Oo][Pp] { printf("%s\n", yytext);symbol_table->enterBlock(); return LOOP; }
+[Ii][Ff] { printf("%s\n", yytext);symbol_table->enterBlock(); return IF; }
+[Ee][Ll][Ss][Ee] { printf("%s\n", yytext);return ELSE; }
+[Ww][Hh][Ii][Ll][Ee] { printf("%s\n", yytext);symbol_table->enterBlock(); return WHILE; }
+[Gg][Oo][Tt][Oo] { printf("%s\n", yytext);return GOTO; }
+[Rr][Ee][Tt][Uu][Rr][Nn] { printf("%s\n", yytext);return RETURN; }
+[Ee][Nn][Dd] { printf("%s\n", yytext);symbol_table->exitBlock(); return END_KEY; }
+[Pp][Rr][Oo][Cc][Ee][Dd][Uu][Rr][Ee] { printf("%s\n", yytext);symbol_table->enterBlock(); return PROCEDURE; }
 
-{TYPE_IDENTIFIER} {
-    return TYPE_IDENTIFIER;
 
-}
 
 {REAL} {
     return TYPE_REAL;
@@ -57,25 +66,12 @@ program { return CODE_BEGIN; }
     return TYPE_INTEGER;
 }
 
+{TYPE_IDENTIFIER} {
+    printf("Identifier: %s\n", yytext);
+    return TYPE_IDENTIFIER;
 
-%%
-
-main() {
-	// open a file handle to a particular file:
-	FILE *myfile = fopen("user_program.file", "r");
-	// make sure it's valid:
-	if (!myfile) {
-		cout << "I can't open user program!" << endl;
-		return -1;
-	}
-	// set lex to read from it instead of defaulting to STDIN:
-	yyin = myfile;
-    int n = 1;
-	// lex through the input:
-	while(n){
-       n = yylex();
-    }
 }
+%%
 
 int yywrap(){
     return 1;
