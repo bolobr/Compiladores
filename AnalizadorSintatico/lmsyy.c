@@ -32,8 +32,8 @@ NEWLINE \n
 {ASSIGNMENT} { return ASSIGNMENT_KEY; }
 
 
-[ ]and[ ] { return AND_OP; }
-[ ]or[ ] { return OR_OP; }
+[ ]and[ ] {printf("%s\n", yytext); return AND_KEY; }
+[ ]or[ ] { return OR_KEY; }
 [ ]not[ ] { return NEGATIVE; }
 {ASSIGNMENT} { return ASSIGNMENT; }
 
@@ -50,7 +50,7 @@ program { return CODE_BEGIN; }
 [Ll][Oo][Oo][Pp] { printf("%s\n", yytext);symbol_table->enterBlock(); return LOOP; }
 [Ii][Ff] { printf("%s\n", yytext);symbol_table->enterBlock(); return IF; }
 [Ee][Ll][Ss][Ee] { printf("%s\n", yytext);return ELSE; }
-[Ww][Hh][Ii][Ll][Ee] { printf("%s\n", yytext);symbol_table->enterBlock(); return WHILE; }
+[Ww][Hh][Ii][Ll][Ee] { printf("%s\n", yytext);symbol_table->enterBlock(); return WHILE_KEY; }
 [Gg][Oo][Tt][Oo] { printf("%s\n", yytext);return GOTO; }
 [Rr][Ee][Tt][Uu][Rr][Nn] { printf("%s\n", yytext);return RETURN; }
 [Ee][Nn][Dd] { printf("%s\n", yytext);symbol_table->exitBlock(); return END_KEY; }

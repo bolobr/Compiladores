@@ -4,7 +4,7 @@
 int yylex(void);
 void yyerror(const char* s) { fprintf(stderr, "%s\n", s); }
 %}
-%token CODE_BEGIN TYPE_IDENTIFIER DECLARE DO_KEY end array of INTEGER_TOKEN BOOLEAN_TOKEN CHAR_TOKEN REAL_TOKEN procedure if_key then caractere WRITE_TOKEN COMA_SEPARATOR END_LINE_TOKEN READ_TOKEN while_key until return_key  NOT_KEY goto_key else_key ASSIGNMENT_KEY char-constant TRUE_VALUE FALSE_VALUE EQUALS LT GT LTE GTE DIFF MULT PLUS MINUS  AND_KEY DIVISION OR_KEY unsigned-integer unsigned-real PARENTESIS_OPEN PARENTESIS_CLOSE END_KEY
+%token CODE_BEGIN TYPE_IDENTIFIER DECLARE DO_KEY end array of INTEGER_TOKEN BOOLEAN_TOKEN CHAR_TOKEN REAL_TOKEN procedure if_key then caractere WRITE_TOKEN COMA_SEPARATOR END_LINE_TOKEN READ_TOKEN WHILE_KEY until return_key  NOT_KEY goto_key else_key ASSIGNMENT_KEY char-constant TRUE_VALUE FALSE_VALUE EQUALS LT GT LTE GTE DIFF MULT PLUS MINUS  AND_KEY DIVISION OR_KEY unsigned-integer unsigned-real PARENTESIS_OPEN PARENTESIS_CLOSE END_KEY
 %start program-linha
 %%
 
@@ -34,7 +34,7 @@ decl : variable-decl
 variable-decl : type ident-list
               ;
 
-ident-list : TYPE_IDENTIFIER resto_identlist
+ident-list : TYPE_IDENTIFIER resto_identlist;
 
 resto_identlist :
                 | COMA_SEPARATOR TYPE_IDENTIFIER resto_identlist
@@ -127,7 +127,7 @@ condition : expression;
 
 loop-stmt : stmt-prefix stmt-list stmt-suffix;
 
-stmt-prefix : while_key condition DO_KEY
+stmt-prefix : WHILE_KEY condition DO_KEY
             | DO_KEY
             ;
 
@@ -135,9 +135,9 @@ stmt-suffix : until condition
             | end
             ;
 
-read-stmt : READ_TOKEN PARENTESIS_OPEN ident-list PARENTESIS_CLOSE END_LINE_TOKEN ;
+read-stmt : READ_TOKEN PARENTESIS_OPEN ident-list PARENTESIS_CLOSE ;
 
-write-stmt : WRITE_TOKEN PARENTESIS_OPEN expr-list PARENTESIS_CLOSE  END_LINE_TOKEN ;
+write-stmt : WRITE_TOKEN PARENTESIS_OPEN expr-list PARENTESIS_CLOSE  ;
 
 goto-stmt : goto_key label;
 
@@ -178,7 +178,7 @@ factor-a : factor
 
 factor : variable
        | constant
-       | '(' expression ')'
+       | PARENTESIS_OPEN expression PARENTESIS_CLOSE
        ;
 
 relop : EQUALS
