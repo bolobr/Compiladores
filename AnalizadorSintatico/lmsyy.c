@@ -48,8 +48,9 @@ program { return CODE_BEGIN; }
 [Dd][Ee][Cc][Ll][Aa][Rr][Ee] { return  DECLARE; }
 [Dd][Oo] { symbol_table->enterBlock(); return DO_KEY; }
 [Ll][Oo][Oo][Pp] { printf("%s\n", yytext);symbol_table->enterBlock(); return LOOP; }
-[Ii][Ff] { printf("%s\n", yytext);symbol_table->enterBlock(); return IF; }
-[Ee][Ll][Ss][Ee] { printf("%s\n", yytext);return ELSE; }
+[Ii][Ff] { printf("%s\n", yytext);symbol_table->enterBlock(); return IF_KEY; }
+[Ee][Ll][Ss][Ee] { printf("%s\n", yytext);return ELSE_KEY; }
+[Tt][Hh][Ee][Nn] { return THEN_KEY; }
 [Ww][Hh][Ii][Ll][Ee] { printf("%s\n", yytext);symbol_table->enterBlock(); return WHILE_KEY; }
 [Gg][Oo][Tt][Oo] { printf("%s\n", yytext);return GOTO; }
 [Rr][Ee][Tt][Uu][Rr][Nn] { printf("%s\n", yytext);return RETURN; }

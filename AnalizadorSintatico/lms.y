@@ -4,7 +4,7 @@
 int yylex(void);
 void yyerror(const char* s) { fprintf(stderr, "%s\n", s); }
 %}
-%token CODE_BEGIN TYPE_IDENTIFIER DECLARE DO_KEY end array of INTEGER_TOKEN BOOLEAN_TOKEN CHAR_TOKEN REAL_TOKEN procedure if_key then caractere WRITE_TOKEN COMA_SEPARATOR END_LINE_TOKEN READ_TOKEN WHILE_KEY until return_key  NOT_KEY goto_key else_key ASSIGNMENT_KEY char-constant TRUE_VALUE FALSE_VALUE EQUALS LT GT LTE GTE DIFF MULT PLUS MINUS  AND_KEY DIVISION OR_KEY unsigned-integer unsigned-real PARENTESIS_OPEN PARENTESIS_CLOSE END_KEY
+%token CODE_BEGIN TYPE_IDENTIFIER DECLARE DO_KEY end array of INTEGER_TOKEN BOOLEAN_TOKEN CHAR_TOKEN REAL_TOKEN procedure IF_KEY then caractere WRITE_TOKEN COMA_SEPARATOR END_LINE_TOKEN READ_TOKEN WHILE_KEY until return_key  NOT_KEY goto_key ELSE_KEY ASSIGNMENT_KEY char-constant TRUE_VALUE FALSE_VALUE EQUALS LT GT LTE GTE DIFF MULT PLUS MINUS  AND_KEY DIVISION OR_KEY unsigned-integer unsigned-real PARENTESIS_OPEN THEN_KEY PARENTESIS_CLOSE END_KEY
 %start program-linha
 %%
 
@@ -35,7 +35,6 @@ variable-decl : type ident-list
               ;
 
 ident-list : TYPE_IDENTIFIER resto_identlist;
-
 resto_identlist :
                 | COMA_SEPARATOR TYPE_IDENTIFIER resto_identlist
                 ;
@@ -117,10 +116,10 @@ variable : TYPE_IDENTIFIER
           ;
 array-element : TYPE_IDENTIFIER'[' expression ']';
 
-if-stmt : if_key condition then stmt-list if-stmt-linha end;
+if-stmt : IF_KEY condition THEN_KEY stmt-list if-stmt-linha END_KEY;
 
 if-stmt-linha :
-              | else_key stmt-list
+              | ELSE_KEY stmt-list
               ;
 
 condition : expression;

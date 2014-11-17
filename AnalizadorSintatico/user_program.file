@@ -7,9 +7,6 @@ do read(number);
 write(number);
 divisor := number;
 nofactor := true;
-if (number) then nofactor := false
-else divisor := divisor - 1.1
-end
 prime := nofactor;
-if prime then write('S') else write('N') end
-end
+teste := 4;
+end;
